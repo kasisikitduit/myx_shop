@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>AI選股分析 | Myx Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      background: rgba(255,255,255,0.95);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .page-header {
+      background: rgba(255,255,255,0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .video-section {
+      background: rgba(255,255,255,0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .video-section h2 {
+      margin-bottom: 1.5rem;
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border-radius: 15px;
+      background: #f7fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 15px;
+    }
+    .video-placeholder {
+      text-align: center;
+      padding: 3rem;
+      color: #718096;
+    }
+    .video-placeholder i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #cbd5e0;
+    }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background: red;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .social-btn.tiktok {
+      background: #000;
+    }
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .update-time {
+      text-align: center;
+      color: #718096;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+    .stock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .stock-card {
+      background: rgba(255,255,255,0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .stock-card:hover {
+      transform: translateY(-5px);
+    }
+    .stock-card h3 {
+      margin-bottom: 1.5rem;
+      color: #4a5568;
+      font-size: 1.4rem;
+    }
+    .performance {
+      color: #48bb78;
+      font-weight: 700;
+    }
+    .risk-high {
+      color: #e53e3e;
+      font-weight: 700;
+    }
+    .risk-medium {
+      color: #ed8936;
+      font-weight: 700;
+    }
+    .risk-low {
+      color: #38a169;
+      font-weight: 700;
+    }
+    @media(max-width:768px) {
+      .nav-buttons { justify-content: center; }
+      .social-links { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+<!-- 最新影片：2025年11月06日 -->
+<div class="video-block" id="video-AxlIA-OivOs" style="max-width:560px; margin:auto; border:1px solid #ccc; padding:10px; border-radius:8px; background:#f9f9f9;">
+  <h3 style="font-size:1.2em; margin-bottom:10px;">【 Ai 選股 】2025年 11月 6日 成績揭曉。                          # Ai # 選股  # Bursa # KLSE #被动收入 #賺錢 #超跌反弹 #逆向操作</h3>
+  <p style="font-size:0.9em; color:#666;">更新日期：2025年11月06日</p>
+  <a href="https://www.youtube.com/watch?v=AxlIA-OivOs" target="_blank">
+    <img src="https://img.youtube.com/vi/AxlIA-OivOs/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/AxlIA-OivOs/hqdefault.jpg';" alt="影片縮圖" style="width:100%; border-radius:4px; margin-bottom:10px;">
+  </a>
+  <iframe width="100%" height="315" src="https://www.youtube.com/embed/AxlIA-OivOs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<!-- 新增影片區塊：2025年11月06日 -->
+  <div class="container">
+    <div class="nav-buttons">
+      <a href="./index.html" class="nav-btn"><i class="fas fa-home"></i> 回到 主頁</a>
+      <a href="./products.html" class="nav-btn"><i class="fas fa-shopping-bag"></i> 聯盟商店</a>
+      <a href="./vehicles.html" class="nav-btn"><i class="fas fa-car"></i> 二 手車輛</a>
+    </div>
+
+    <div class="page-header">
+      <h1><i class="fas fa-robot"></i> AI選股成績與分析</h1>
+      <p>基於人工智能算法的股票分析與推薦 - 每日開盤前更新</p>
+    </div>
+
+    <div class="video-section">
+      <h2><i class="fas fa-play-circle"></i> 今日AI選股影片</h2>
+      <div class="video-wrapper">
+        <!-- 替换 YOUR_VIDEO_ID 为您的实际YouTube视频ID -->
+        <iframe 
+          src="https://www.youtube.com/embed/latest?channel=UCbursasearch" 
+          title="最新AI選股影片" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="social-links">
+        <a href="https://www.youtube.com/@bursasearch" class="social-btn" target="_blank">
+          <i class="fab fa-youtube"></i> 訂閱YouTube頻道
+        </a>
+        <a href="https://www.tiktok.com/@bursasearch" class="social-btn tiktok" target="_blank">
+          <i class="fab fa-tiktok"></i> 關注TikTok
+        </a>
+      </div>
+
+      <div class="update-time">
+        最後更新: <script>document.write(new Date().toLocaleDateString("zh-Hans-CN"))</script>
+      </div>
+    </div>
+
+    <div class="stock-grid">
+      <div class="stock-card">
+        <h3>💹 科技股推薦</h3>
+        <p>近期表現: <span class="performance">+15.2%</span></p>
+        <p>風險等級: <span class="risk-medium">中</span></p>
+        <p>AI評分: 88/100</p>
+      </div>
+      <div class="stock-card">
+        <h3>🏦 金融股分析</h3>
+        <p>近期表現: <span class="performance">+8.7%</span></p>
+        <p>風險等級: <span class="risk-low">低</span></p>
+        <p>AI評分: 92/100</p>
+      </div>
+      <div class="stock-card">
+        <h3>⚡ 新能源趨勢</h3>
+        <p>近期表現: <span class="performance">+22.1%</span></p>
+        <p>風險等級: <span class="risk-high">高</span></p>
+        <p>AI評分: 76/100</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("AI選股分析頁面已載入完成");
+      
+      // 如果您有特定的视频ID，可以在这里替换
+      // const videoId = "YOUR_SPECIFIC_VIDEO_ID";
+      // document.querySelector('iframe').src = `https://www.youtube.com/embed/${videoId}`;
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
