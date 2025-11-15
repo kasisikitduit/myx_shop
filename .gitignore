@@ -1,0 +1,9 @@
+# Sensitive files - NEVER COMMIT
+admin.html
+build_trigger.txt
+security-check.sh
+
+# System files
+.DS_Store
+Thumbs.db
+*.log
