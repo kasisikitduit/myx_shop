@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>開發者訪問控制 - Myx Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; padding: 20px; min-height: 100vh; }
+        .container { max-width: 600px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .header { background: linear-gradient(135deg, #333 0%, #666 100%); color: white; padding: 25px; text-align: center; }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { opacity: 0.8; }
+        .content { padding: 25px; }
+        .section { margin-bottom: 25px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #2196F3; }
+        .section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; color: #333; }
+        .button-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
+        .dev-btn { padding: 15px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .dev-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .btn-green { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white; }
+        .btn-blue { background: linear-gradient(135deg, #2196F3, #1976D2); color: white; }
+        .btn-red { background: linear-gradient(135deg, #F44336, #D32F2F); color: white; }
+        .btn-orange { background: linear-gradient(135deg, #FF9800, #F57C00); color: white; }
+        .link-btn { display: block; padding: 15px; margin: 10px 0; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: center; color: #2196F3; text-decoration: none; font-weight: 500; transition: all 0.3s; }
+        .link-btn:hover { background: #2196F3; color: white; border-color: #2196F3; }
+        .status-panel { background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-top: 15px; }
+        .status-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .status-item:last-child { border-bottom: none; }
+        .status-label { font-weight: 500; color: #666; }
+        .status-value { font-weight: 600; }
+        .active { color: #4CAF50; }
+        .inactive { color: #F44336; }
+        .footer { text-align: center; padding: 20px; background: #f5f5f5; border-top: 1px solid #ddd; color: #666; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Myx Shop 開發者控制面板</h1>
+            <p>localhost:7070 環境</p>
+        </div>
+        
+        <div class="content">
+            <!-- 當前狀態 -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>當前訪問狀態</h3>
+                </div>
+                <div class="status-panel" id="statusPanel">
+                    <!-- 狀態會動態加載 -->
+                </div>
+            </div>
+            
+            <!-- 開發者權限 -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-user-cog"></i>
+                    <h3>開發者權限管理</h3>
+                </div>
+                <div class="button-group">
+                    <button class="dev-btn btn-green" onclick="grantDevAccess(30)">
+                        <i class="fas fa-calendar-alt"></i> 30天權限
+                    </button>
+                    <button class="dev-btn btn-blue" onclick="grantDevAccess(365)">
+                        <i class="fas fa-calendar-check"></i> 1年權限
+                    </button>
+                    <button class="dev-btn btn-orange" onclick="grantPermanentAccess()">
+                        <i class="fas fa-infinity"></i> 永久權限
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 模擬會員 -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-users"></i>
+                    <h3>模擬付費會員</h3>
+                </div>
+                <div class="button-group">
+                    <button class="dev-btn btn-green" onclick="activateMember(30)">30天會員</button>
+                    <button class="dev-btn btn-orange" onclick="activateMember(7)">7天會員</button>
+                    <button class="dev-btn btn-red" onclick="activateMember(2)">2天到期</button>
+                </div>
+            </div>
+            
+            <!-- 快速訪問 -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-external-link-alt"></i>
+                    <h3>快速訪問鏈接</h3>
+                </div>
+                <!-- 關鍵修改：使用 localhost:7070 -->
+                <a href="http://localhost:7070/bursa.html?dev=true" class="link-btn">
+                    <i class="fas fa-lock"></i> 付費頁面
+                </a>
+                <a href="http://localhost:7070/web/retail-inv.html?dev=true" class="link-btn">
+                    <i class="fas fa-chart-line"></i> 投資計算器
+                </a>
+                <a href="http://localhost:7070/index.html" class="link-btn">
+                    <i class="fas fa-home"></i> 主頁
+                </a>
+                <a href="javascript:void(0)" onclick="openWithParams()" class="link-btn">
+                    <i class="fas fa-cog"></i> 自定義參數
+                </a>
+            </div>
+            
+            <!-- 數據管理 -->
+            <div class="section">
+                <div class="section-title">
+                    <i class="fas fa-trash-alt"></i>
+                    <h3>數據管理</h3>
+                </div>
+                <div class="button-group">
+                    <button class="dev-btn btn-red" onclick="clearAllData()">
+                        <i class="fas fa-broom"></i> 清除所有數據
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Myx Shop 開發者面板 | localhost:7070</p>
+        </div>
+    </div>
+
+    <script>
+        // 配置
+        const BASE_URL = 'http://localhost:7070';
+        
+        // 更新狀態顯示
+        function updateStatus() {
+            const devAccess = localStorage.getItem('dev_access') === 'true';
+            const devExpiryStr = localStorage.getItem('dev_expiry');
+            const memberAccess = localStorage.getItem('myx_member') === 'true';
+            const memberExpiryStr = localStorage.getItem('myx_expiry');
+            
+            let devStatus = '❌ 未啟用';
+            let devExpiry = 'N/A';
+            let memberStatus = '❌ 未啟用';
+            let memberExpiry = 'N/A';
+            
+            if (devAccess && devExpiryStr) {
+                const expiry = new Date(devExpiryStr);
+                const today = new Date();
+                if (today <= expiry) {
+                    devStatus = '✅ 已啟用';
+                    const daysLeft = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+                    devExpiry = `${expiry.toLocaleDateString('zh-CN')} (剩餘 ${daysLeft} 天)`;
+                } else {
+                    devStatus = '⏰ 已過期';
+                }
+            }
+            
+            if (memberAccess && memberExpiryStr) {
+                const expiry = new Date(memberExpiryStr);
+                const today = new Date();
+                if (today <= expiry) {
+                    memberStatus = '✅ 已啟用';
+                    const daysLeft = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+                    memberExpiry = `${expiry.toLocaleDateString('zh-CN')} (剩餘 ${daysLeft} 天)`;
+                } else {
+                    memberStatus = '⏰ 已過期';
+                }
+            }
+            
+            document.getElementById('statusPanel').innerHTML = `
+                <div class="status-item">
+                    <span class="status-label">開發者模式：</span>
+                    <span class="status-value ${devStatus.includes('✅') ? 'active' : 'inactive'}">${devStatus}</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">到期時間：</span>
+                    <span>${devExpiry}</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">普通會員：</span>
+                    <span class="status-value ${memberStatus.includes('✅') ? 'active' : 'inactive'}">${memberStatus}</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">會員到期：</span>
+                    <span>${memberExpiry}</span>
+                </div>
+            `;
+        }
+        
+        // 權限管理函數
+        function grantDevAccess(days) {
+            const expiry = new Date();
+            expiry.setDate(expiry.getDate() + days);
+            
+            localStorage.setItem('dev_access', 'true');
+            localStorage.setItem('dev_expiry', expiry.toISOString());
+            
+            showMessage(`✅ 已授予 ${days} 天開發者權限`);
+            updateStatus();
+        }
+        
+        function grantPermanentAccess() {
+            if (confirm('授予永久開發者權限？（同時設置永久會員）')) {
+                const permanentDate = '2099-12-31T23:59:59.999Z';
+                localStorage.setItem('dev_access', 'true');
+                localStorage.setItem('dev_expiry', permanentDate);
+                localStorage.setItem('myx_member', 'true');
+                localStorage.setItem('myx_expiry', permanentDate);
+                
+                showMessage('✅ 已授予永久權限');
+                updateStatus();
+            }
+        }
+        
+        function activateMember(days) {
+            const expiry = new Date();
+            expiry.setDate(expiry.getDate() + days);
+            
+            localStorage.setItem('myx_member', 'true');
+            localStorage.setItem('myx_expiry', expiry.toISOString());
+            
+            showMessage(`✅ 已激活 ${days} 天付費會員`);
+            updateStatus();
+        }
+        
+        function clearAllData() {
+            if (confirm('⚠️ 確定清除所有數據？')) {
+                localStorage.clear();
+                showMessage('✅ 所有數據已清除');
+                updateStatus();
+            }
+        }
+        
+        function openWithParams() {
+            const params = prompt('輸入URL參數（用逗號分隔）\n例如: dev=true,admin=1,test=1', 'dev=true');
+            if (params) {
+                const paramStr = params.split(',').join('&');
+                window.open(`${BASE_URL}/web/retail-inv.html?${paramStr}`, '_blank');
+            }
+        }
+        
+        function showMessage(text) {
+            alert(text);
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('開發者面板 - localhost:7070');
+            updateStatus();
+        });
+    </script>
+</body>
+</html>
