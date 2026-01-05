@@ -934,7 +934,7 @@
         }
         
         // 修改为本地端口
-        window.location.href = 'http://127.0.0.1:7070/web/retail-inv.html';
+        window.location.href = 'web/retail-inv.html';
     }
 
     // 續費延長服務
@@ -1013,7 +1013,7 @@
         const testSection = document.getElementById('testSection');
         
         // 在本地端口下始终显示测试区域
-        if (window.location.hostname === '127.0.0.1' && window.location.port === '7070') {
+        if (window.location.hostname === '127.0.0.1' || window.location.port === 'localhost') {
             testSection.style.display = 'block';
         } else if (urlParams.has('test') || 
             window.location.hostname === 'localhost' || 
