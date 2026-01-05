@@ -569,7 +569,7 @@
       </div>
       <div class="nav-links">
         <!-- 修改为本地端口 -->
-        <button onclick="window.location.href='http://127.0.0.1:5050/index.html'" class="nav-btn">
+        <button onclick="window.location.href='index.html'" class="nav-btn">
           <span>🏠</span> 主頁
         </button>
         <button onclick="scrollToChannels()" class="nav-btn">
@@ -934,7 +934,7 @@
         }
         
         // 修改为本地端口
-        window.location.href = 'http://127.0.0.1:5050/web/retail-inv.html';
+        window.location.href = 'http://127.0.0.1:7070/web/retail-inv.html';
     }
 
     // 續費延長服務
@@ -1013,7 +1013,7 @@
         const testSection = document.getElementById('testSection');
         
         // 在本地端口下始终显示测试区域
-        if (window.location.hostname === '127.0.0.1' && window.location.port === '5050') {
+        if (window.location.hostname === '127.0.0.1' && window.location.port === '7070') {
             testSection.style.display = 'block';
         } else if (urlParams.has('test') || 
             window.location.hostname === 'localhost' || 
